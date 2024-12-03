@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: 20px auto;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        .header-left h2, .header-left p {
+            margin: 0;
+            margin-right: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .small-column {
+            width: 170px;
+        }
+        a, button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-left: 10px;
+        }
+        a:hover, button:hover {
+            background-color: #45a049;
+        }
+        input {
+            width: 85%;
+            height: 40px;
+            border-radius: 5px;
+            border: solid gray 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <h2>Home</h2>
+                <p>Welcome, {{ request.user.username }}!</p>
+            </div>
+            <a href="{% url 'logout' %}">Log out</a>
+        </div>
+        <h3>Inbox</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th class="small-column">Message ID</th>
+                    <th>Content</th>
+                    <th class="small-column">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Outbox</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th class="small-column">Message ID</th>
+                    <th>Content</th>
+                    <th class="small-column">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.description }}</td>
+                        <td>${{ item.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>New Message</h3>
+        <div>
+            <form action="submit">
+                <input type="text" id="newMessage">
+                <a href="">Send</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
